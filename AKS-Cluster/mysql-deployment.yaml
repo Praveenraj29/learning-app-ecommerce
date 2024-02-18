@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: ecom-db
-          image: praveenraj29/ecom-db:v2  # Replace with your Docker Hub image
+          image: praveenraj29/ecom-db:v3  # Replace with your Docker Hub image
           envFrom:
             - configMapRef:
                 name: db-config

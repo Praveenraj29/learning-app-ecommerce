@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: ecom-web
-          image: praveenraj29/ecom-web:v2  # Replace with your Docker Hub image
+          image: praveenraj29/ecom-web:v3  # Replace with your Docker Hub image
           ports:
             - containerPort: 80
           envFrom:
