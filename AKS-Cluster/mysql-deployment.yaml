@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mysql
+  template:
+    metadata:
+      labels:
+        app: mysql
+    spec:
+      containers:
+        - name: ecom-db
+          image: praveenraj29/ecom-db:v2  # Replace with your Docker Hub image
+          envFrom:
+            - configMapRef:
+                name: db-config
+          ports:
+            - containerPort: 3306
+          volumeMounts:
+            - name: db-load-script
+              mountPath: /docker-entrypoint-initdb.d
+          resources:
+            limits:
+              memory: "512Mi"  # Adjust as needed
+              cpu: "500m"      # Adjust as needed
+            requests:
+              memory: "256Mi"  # Adjust as needed
+              cpu: "250m"      # Adjust as needed
+      volumes:
+        - name: db-load-script
+          configMap:
+            name: db-load-script
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql-service
+spec:
+  selector:
+    app: mysql
+  ports:
+    - protocol: TCP
+      port: 3306
+      targetPort: 3306
